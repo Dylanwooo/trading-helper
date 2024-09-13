@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import {
   Select,
   SelectContent,
@@ -74,6 +75,7 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-950 flex items-center justify-center p-4">
+      <Analytics />
       <Card className="w-full max-w-2xl bg-blue-800 text-blue-100 shadow-lg">
         <CardHeader className="border-b border-blue-700">
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
