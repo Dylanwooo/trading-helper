@@ -51,10 +51,6 @@ export default function Component() {
       setStopLossPercentage(slPercentage.toNumber());
 
       if (!maxRiskValue.isZero() && !slPercentage.isZero()) {
-        // const size = maxRiskValue.dividedBy(
-        //   slPercentage.dividedBy(100).times(entry).times(leverageValue)
-        // );
-
         const size = maxRiskValue
           .dividedBy(slPercentage.dividedBy(100))
           .dividedBy(leverageValue);
@@ -88,19 +84,19 @@ export default function Component() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-900 to-blue-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black flex items-center justify-center p-4">
       <Analytics />
-      <Card className="w-full max-w-2xl bg-blue-800 text-blue-100 shadow-lg">
-        <CardHeader className="border-b border-blue-700">
+      <Card className="w-full max-w-2xl bg-gray-800 text-gray-100 shadow-lg">
+        <CardHeader className="border-b border-gray-700">
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
-            <Anchor className="w-6 h-6" />
+            <Anchor className="w-6 h-6 text-green-400" />
             Trading Calculator
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="risk-percentage" className="text-blue-200">
+              <Label htmlFor="risk-percentage" className="text-gray-300">
                 Risk Percentage
               </Label>
               <Select
@@ -109,11 +105,11 @@ export default function Component() {
               >
                 <SelectTrigger
                   id="risk-percentage"
-                  className="bg-blue-700 border-blue-600 text-blue-100"
+                  className="bg-gray-700 border-gray-600 text-gray-100"
                 >
                   <SelectValue placeholder="Select risk percentage" />
                 </SelectTrigger>
-                <SelectContent className="bg-blue-700 text-blue-100">
+                <SelectContent className="bg-gray-700 text-gray-100">
                   <SelectItem value="1">1%</SelectItem>
                   <SelectItem value="2">2%</SelectItem>
                   <SelectItem value="5">5%</SelectItem>
@@ -126,13 +122,13 @@ export default function Component() {
                   placeholder="Custom risk %"
                   value={customRisk}
                   onChange={(e) => setCustomRisk(e.target.value)}
-                  className="bg-blue-700 border-blue-600 text-blue-100 placeholder-blue-300"
+                  className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400"
                 />
               )}
             </div>
             <div className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="account-balance" className="text-blue-200">
+                <Label htmlFor="account-balance" className="text-gray-300">
                   Account Balance
                 </Label>
                 <Input
@@ -140,21 +136,21 @@ export default function Component() {
                   type="number"
                   value={accountBalance}
                   onChange={(e) => setAccountBalance(e.target.value)}
-                  className="bg-blue-700 border-blue-600 text-blue-100"
+                  className="bg-gray-700 border-gray-600 text-gray-100"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="leverage" className="text-blue-200">
+                <Label htmlFor="leverage" className="text-gray-300">
                   Leverage
                 </Label>
                 <div className="flex items-center">
-                  <span className="mr-2 text-blue-200">x</span>
+                  <span className="mr-2 text-gray-300">x</span>
                   <Input
                     id="leverage"
                     type="number"
                     value={leverage}
                     onChange={(e) => setLeverage(e.target.value)}
-                    className="bg-blue-700 border-blue-600 text-blue-100"
+                    className="bg-gray-700 border-gray-600 text-gray-100"
                     min="1"
                   />
                 </div>
@@ -163,7 +159,7 @@ export default function Component() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="entry-price" className="text-blue-200">
+              <Label htmlFor="entry-price" className="text-gray-300">
                 Entry Price
               </Label>
               <Input
@@ -171,11 +167,11 @@ export default function Component() {
                 type="number"
                 value={entryPrice}
                 onChange={(e) => setEntryPrice(e.target.value)}
-                className="bg-blue-700 border-blue-600 text-blue-100"
+                className="bg-gray-700 border-gray-600 text-gray-100"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="take-profit" className="text-blue-200">
+              <Label htmlFor="take-profit" className="text-gray-300">
                 Take Profit Price
               </Label>
               <Input
@@ -183,11 +179,11 @@ export default function Component() {
                 type="number"
                 value={takeProfitPrice}
                 onChange={(e) => setTakeProfitPrice(e.target.value)}
-                className="bg-blue-700 border-blue-600 text-blue-100"
+                className="bg-gray-700 border-gray-600 text-gray-100"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stop-loss" className="text-blue-200">
+              <Label htmlFor="stop-loss" className="text-gray-300">
                 Stop Loss Price
               </Label>
               <Input
@@ -195,47 +191,47 @@ export default function Component() {
                 type="number"
                 value={stopLossPrice}
                 onChange={(e) => setStopLossPrice(e.target.value)}
-                className="bg-blue-700 border-blue-600 text-blue-100"
+                className="bg-gray-700 border-gray-600 text-gray-100"
               />
             </div>
           </div>
-          <div className="mt-8 space-y-4 bg-blue-900 p-4 rounded-lg">
-            <h3 className="text-xl font-semibold flex items-center gap-2 text-blue-100">
-              <Compass className="w-5 h-5" />
+          <div className="mt-8 space-y-4 bg-gray-900 p-4 rounded-lg">
+            <h3 className="text-xl font-semibold flex items-center gap-2 text-gray-100">
+              <Compass className="w-5 h-5 text-green-400" />
               Trading Metrics
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-2">
-                <Waves className="w-5 h-5 text-blue-300" />
+                <Waves className="w-5 h-5 text-green-400" />
                 <p>
-                  <span className="text-blue-300">Maximum Risk:</span> $
+                  <span className="text-gray-400">Maximum Risk:</span> $
                   {maxRisk.toFixed(2)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Waves className="w-5 h-5 text-blue-300" />
+                <Waves className="w-5 h-5 text-green-400" />
                 <p>
-                  <span className="text-blue-300">Stop Loss %:</span>{" "}
+                  <span className="text-gray-400">Stop Loss %:</span>{" "}
                   {stopLossPercentage.toFixed(2)}%
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Waves className="w-5 h-5 text-blue-300" />
+                <Waves className="w-5 h-5 text-green-400" />
                 <p>
-                  <span className="text-blue-300">Position Size:</span>{" "}
+                  <span className="text-gray-400">Position Size:</span>{" "}
                   {positionSize.toFixed(4)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Waves className="w-5 h-5 text-blue-300" />
+                <Waves className="w-5 h-5 text-green-400" />
                 <p>
-                  <span className="text-blue-300">RR:</span> {rr.toFixed(2)}
+                  <span className="text-gray-400">RR:</span> {rr.toFixed(2)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-blue-300" />
+                <TrendingUp className="w-5 h-5 text-green-400" />
                 <p>
-                  <span className="text-blue-300">Leverage:</span> {leverage}x
+                  <span className="text-gray-400">Leverage:</span> {leverage}x
                 </p>
               </div>
             </div>
