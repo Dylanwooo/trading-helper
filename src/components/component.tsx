@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import BigNumber from "bignumber.js";
 import {
   Select,
   SelectContent,
@@ -29,32 +30,40 @@ export default function Component() {
   const [rr, setRR] = useState(0);
 
   useEffect(() => {
-    const balance = parseFloat(accountBalance) || 0;
-    const risk =
-      riskPercentage === "custom"
-        ? parseFloat(customRisk) || 0
-        : parseFloat(riskPercentage);
-    const maxRiskValue = (balance * risk) / 100;
-    setMaxRisk(maxRiskValue);
+    const balance = new BigNumber(accountBalance || 0);
+    const risk = new BigNumber(
+      riskPercentage === "custom" ? customRisk || 0 : riskPercentage
+    );
+    const maxRiskValue = balance.times(risk).dividedBy(100);
+    setMaxRisk(maxRiskValue.toNumber());
 
-    const entry = parseFloat(entryPrice) || 0;
-    const stopLoss = parseFloat(stopLossPrice) || 0;
-    const takeProfit = parseFloat(takeProfitPrice) || 0;
-    const leverageValue = parseFloat(leverage) || 1;
+    const entry = new BigNumber(entryPrice || 0);
+    const stopLoss = new BigNumber(stopLossPrice || 0);
+    const takeProfit = new BigNumber(takeProfitPrice || 0);
+    const leverageValue = new BigNumber(leverage || 1);
 
-    if (entry && stopLoss) {
-      const slPercentage = Math.abs((entry - stopLoss) / entry) * 100;
-      setStopLossPercentage(slPercentage);
+    if (!entry.isZero() && !stopLoss.isZero()) {
+      const slPercentage = entry
+        .minus(stopLoss)
+        .abs()
+        .dividedBy(entry)
+        .times(100);
+      setStopLossPercentage(slPercentage.toNumber());
 
-      if (maxRiskValue && slPercentage) {
-        const size =
-          maxRiskValue / ((slPercentage / 100) * entry) / leverageValue;
-        setPositionSize(size);
+      if (!maxRiskValue.isZero() && !slPercentage.isZero()) {
+        const size = maxRiskValue.dividedBy(
+          slPercentage.dividedBy(100).times(entry).times(leverageValue)
+        );
+        setPositionSize(size.toNumber());
       }
 
-      if (takeProfit) {
-        const tpPercentage = Math.abs((takeProfit - entry) / entry) * 100;
-        setRR(tpPercentage / slPercentage);
+      if (!takeProfit.isZero()) {
+        const tpPercentage = takeProfit
+          .minus(entry)
+          .abs()
+          .dividedBy(entry)
+          .times(100);
+        setRR(tpPercentage.dividedBy(slPercentage).toNumber());
       } else {
         setRR(0);
       }
