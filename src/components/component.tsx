@@ -51,9 +51,14 @@ export default function Component() {
       setStopLossPercentage(slPercentage.toNumber());
 
       if (!maxRiskValue.isZero() && !slPercentage.isZero()) {
-        const size = maxRiskValue.dividedBy(
-          slPercentage.dividedBy(100).times(entry).times(leverageValue)
-        );
+        // const size = maxRiskValue.dividedBy(
+        //   slPercentage.dividedBy(100).times(entry).times(leverageValue)
+        // );
+
+        const size = maxRiskValue
+          .dividedBy(slPercentage.dividedBy(100))
+          .dividedBy(leverageValue);
+
         setPositionSize(size.toNumber());
       }
 
@@ -89,7 +94,7 @@ export default function Component() {
         <CardHeader className="border-b border-blue-700">
           <CardTitle className="text-2xl font-bold flex items-center gap-2">
             <Anchor className="w-6 h-6" />
-            Deep Sea Trading Calculator
+            Trading Calculator
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 mt-4">
@@ -142,14 +147,17 @@ export default function Component() {
                 <Label htmlFor="leverage" className="text-blue-200">
                   Leverage
                 </Label>
-                <Input
-                  id="leverage"
-                  type="number"
-                  value={leverage}
-                  onChange={(e) => setLeverage(e.target.value)}
-                  className="bg-blue-700 border-blue-600 text-blue-100"
-                  min="1"
-                />
+                <div className="flex items-center">
+                  <span className="mr-2 text-blue-200">x</span>
+                  <Input
+                    id="leverage"
+                    type="number"
+                    value={leverage}
+                    onChange={(e) => setLeverage(e.target.value)}
+                    className="bg-blue-700 border-blue-600 text-blue-100"
+                    min="1"
+                  />
+                </div>
               </div>
             </div>
           </div>
